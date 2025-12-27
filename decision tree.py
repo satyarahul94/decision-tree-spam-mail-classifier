@@ -22,7 +22,7 @@ from sklearn.metrics import (
 )
 
 # -----------------------------------------------------
-# 1️⃣ Load YOUR dataset
+# 1️ Load YOUR dataset
 # -----------------------------------------------------
 pd.set_option('display.float_format', lambda x: f'{x:.2f}')
 
@@ -38,7 +38,7 @@ print("\nMissing values:")
 print(df.isnull().sum())
 
 # -----------------------------------------------------
-# 2️⃣ Handle missing values
+# 2️ Handle missing values
 # -----------------------------------------------------
 for col in df.columns:
     if col != "is_spam":   # target column
@@ -48,7 +48,7 @@ print("\nMissing values after cleaning:")
 print(df.isnull().sum())
 
 # -----------------------------------------------------
-# 3️⃣ Remove duplicate rows
+# 3️ Remove duplicate rows
 # -----------------------------------------------------
 before = df.shape[0]
 df = df.drop_duplicates()
@@ -58,7 +58,7 @@ print(f"\nRemoved {before - after} duplicate rows")
 print("Final shape:", df.shape)
 
 # -----------------------------------------------------
-# 4️⃣ Features (X) and Target (y)
+# 4️ Features (X) and Target (y)
 # -----------------------------------------------------
 X = df.drop("is_spam", axis=1)
 y = df["is_spam"]
@@ -67,7 +67,7 @@ print("\nTarget distribution:")
 print(y.value_counts())
 
 # -----------------------------------------------------
-# 5️⃣ Train-Test Split
+# 5️ Train-Test Split
 # -----------------------------------------------------
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
@@ -80,7 +80,7 @@ print("\nTrain shape:", X_train.shape)
 print("Test shape :", X_test.shape)
 
 # -----------------------------------------------------
-# 6️⃣ Train Decision Tree Model
+# 6️ Train Decision Tree Model
 # -----------------------------------------------------
 dt_model = DecisionTreeClassifier(
     criterion="gini",   # or "entropy"
@@ -91,13 +91,13 @@ dt_model = DecisionTreeClassifier(
 dt_model.fit(X_train, y_train)
 
 # -----------------------------------------------------
-# 7️⃣ Predictions
+# 7️ Predictions
 # -----------------------------------------------------
 y_pred = dt_model.predict(X_test)
 y_prob = dt_model.predict_proba(X_test)[:, 1]
 
 # -----------------------------------------------------
-# 8️⃣ Evaluation Metrics
+# 8️ Evaluation Metrics
 # -----------------------------------------------------
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
@@ -116,7 +116,7 @@ print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
 # -----------------------------------------------------
-# 9️⃣ Confusion Matrix
+# 9️ Confusion Matrix
 # -----------------------------------------------------
 cm = confusion_matrix(y_test, y_pred)
 
@@ -129,7 +129,7 @@ plt.tight_layout()
 plt.show()
 
 # -----------------------------------------------------
-# 🔟 ROC Curve
+# 10 ROC Curve
 # -----------------------------------------------------
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 
@@ -144,7 +144,7 @@ plt.tight_layout()
 plt.show()
 
 # -----------------------------------------------------
-# 1️⃣1️⃣ Feature Importance
+# 11 Feature Importance
 # -----------------------------------------------------
 importances = pd.Series(
     dt_model.feature_importances_,
@@ -163,7 +163,7 @@ plt.tight_layout()
 plt.show()
 
 # -----------------------------------------------------
-# 1️⃣2️⃣ Decision Tree Visualization
+# 1️2 Decision Tree Visualization
 # -----------------------------------------------------
 plt.figure(figsize=(20, 10))
 plot_tree(
@@ -177,7 +177,7 @@ plt.title("Decision Tree Visualization (Top Levels)")
 plt.show()
 
 # -----------------------------------------------------
-# 1️⃣3️⃣ User Input Prediction
+# 1️3 User Input Prediction
 # -----------------------------------------------------
 print("\n--- User Input Prediction (Decision Tree) ---")
 
@@ -194,9 +194,10 @@ try:
 
     result='spam' if user_class == 1 else 'not spam'
 
-    print("\n✅ Prediction Result")
+    print("\n Prediction Result")
     print(f"Predicted Class:{result}")
     print(f"Probability of Class 1: {user_prob:.2f}")
 
 except Exception as e:
     print("Error:", e)
+
